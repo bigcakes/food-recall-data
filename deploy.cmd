@@ -111,13 +111,22 @@ IF EXIST "%DEPLOYMENT_TARGET%\package.json" (
   popd
 )
 
-:: 4. Build the webclient
+:: 4. Remove existing static content
+IF EXIST "%DEPLOYMENT_TARGET%\static" (
+  pushd "%DEPLOYMENT_TARGET%\"
+  echo "Removing existing static content"
+  call :ExecuteCmd rmdir static /s
+
+  if !ERRORLEVEL! NEQ 0 goto error
+  popd
+)
+
+:: 5. Build the webclient
 IF EXIST "%DEPLOYMENT_TARGET%\build" (
   pushd "%DEPLOYMENT_TARGET%\build"
   echo "Putting build content in parent direct"
   call :ExecuteCmd move *.* ..
   call :ExecuteCmd move static ..
- :: call :ExecuteCmd ".\node_modules\.bin\gulp.cmd"
   if !ERRORLEVEL! NEQ 0 goto error
   popd
 )
