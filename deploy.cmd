@@ -116,6 +116,7 @@ IF EXIST "%DEPLOYMENT_TARGET%\build" (
   pushd "%DEPLOYMENT_TARGET%\build"
   echo "Putting build content in parent direct"
   call :ExecuteCmd move *.* ..
+  call :ExecuteCmd move static ..
  :: call :ExecuteCmd ".\node_modules\.bin\gulp.cmd"
   if !ERRORLEVEL! NEQ 0 goto error
   popd
