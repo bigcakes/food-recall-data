@@ -1,17 +1,7 @@
 import React, { Component } from 'react';
 
 import RecallListItem from "./RecallListItem";
-
-const debounce = (fn, delay = 500) => {
-  var timer = null;
-  return function () {
-    var context = this, args = arguments;
-    clearTimeout(timer);
-    timer = setTimeout(function () {
-      fn.apply(context, args);
-    }, delay);
-  };
-}
+import { debounce } from "../utility";
 
 class RecallList extends Component {
   constructor(props) {
@@ -55,7 +45,7 @@ class RecallList extends Component {
   }, 300)
 
   componentDidMount() {
-    const escapedTerm = this.props.params.recallType;
+    const escapedTerm = encodeURIComponent(this.props.params.recallType);
     
     if (escapedTerm) {
       this.refreshRecalls(escapedTerm);

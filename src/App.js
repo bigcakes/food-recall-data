@@ -16,9 +16,7 @@ class App extends Component {
   }
 
   recallSearch(term) {
-    const escapedTerm = encodeURIComponent(term);
-
-    this.props.router.push(`/recalls/${escapedTerm}`);
+    this.props.router.push(`/recalls/${term}`);
   }
 
   render() {
