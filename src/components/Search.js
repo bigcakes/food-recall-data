@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import './Search.css';
+
 class Search extends Component {
   constructor(props) {
     super(props);
@@ -19,11 +21,11 @@ class Search extends Component {
   render() {
     return (
       <div className="row justify-content-center form-group">
-        <div className="col-md-4">
+        <div className="col-lg-4 col-md-8">
           <input 
             type="text" 
             placeholder="What recall are you interested in?" 
-            className="form-control"
+            className="form-control search-bar"
             value={this.props.term}
             onChange={event => this.onInputChange(event.target.value)} />
         </div>

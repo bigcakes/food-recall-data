@@ -1,0 +1,23 @@
+.search-bar {
+  background-color: #1f1132;
+  color: #b8b4b4;
+  /*background-image:
+    linear-gradient(
+      to top right, 
+      #1f1132, #6c3caf
+    );*/
+    background-image:
+    radial-gradient(
+      circle at top right,
+      #2a1744,
+      #1f1132
+    );
+  border-radius: 0;
+}
+
+.search-bar:focus {
+    color: #fff;
+    background-color: initial;
+    border-color: #5cb3fd;
+    outline: 0;
+}

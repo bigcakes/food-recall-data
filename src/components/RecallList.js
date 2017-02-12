@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import RecallListItem from "./RecallListItem";
 import { debounce } from "../utility";
 
+import './RecallList.css';
+
 class RecallList extends Component {
   constructor(props) {
     super(props);
@@ -13,7 +15,7 @@ class RecallList extends Component {
     };
   }
 
-  refreshRecalls = debounce((escapedTerm) => {
+  refreshRecalls = (escapedTerm) => {
     //TODO: Allow changing to different filters, reason, company, product, etc
     //TODO: Maybe do total count with graph, then individual listings?
     //const FDA_URL = `https://api.fda.gov/food/enforcement.json?search=reason_for_recall:${escapedTerm}&count=report_date`;
@@ -42,7 +44,9 @@ class RecallList extends Component {
         //TODO: Handle a 404 (no results)
         console.log("Something went wrong", err);
       });
-  }, 300)
+  }
+
+  refreshRecallsDebounced = debounce(this.refreshRecalls, 500)
 
   componentDidMount() {
     const escapedTerm = encodeURIComponent(this.props.params.recallType);
@@ -59,7 +63,7 @@ class RecallList extends Component {
       return;
     }
 
-    this.refreshRecalls(escapedTerm);
+    this.refreshRecallsDebounced(escapedTerm);
   }
 
   renderRecall(recall) {
@@ -71,8 +75,8 @@ class RecallList extends Component {
   render() {
     return (
       <div className="row justify-content-center">
-        <div className="col-md-8">
-          <ul className="list-group">
+        <div className="col-lg-8">
+          <ul className="list-group recall-list">
             {this.state.recalls.map(this.renderRecall)}
           </ul>
         </div>
