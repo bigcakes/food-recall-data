@@ -4,7 +4,7 @@ class Recall extends Component {
   render() {
     return (
       <div>
-        {this.props.params.recallType}
+        I am a recall detail item
       </div>
     );
   }

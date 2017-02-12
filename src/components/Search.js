@@ -1,27 +1,16 @@
 import React, { Component } from 'react';
 
-const debounce = (fn, delay = 500) => {
-  var timer = null;
-  return function () {
-    var context = this, args = arguments;
-    clearTimeout(timer);
-    timer = setTimeout(function () {
-      fn.apply(context, args);
-    }, delay);
-  };
-}
-
 class Search extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { term: '' };
+    //this.state = { term: "" };
 
-    this.searchDebounce = debounce(this.props.onSearchTermChange, 300);
+    this.searchDebounce = this.props.onSearchTermChange; //debounce(this.props.onSearchTermChange, 300);
   }
 
   onInputChange(term) {
-    this.setState({term});
+    //this.setState({term});
     this.searchDebounce(term);
   }
 
@@ -33,6 +22,7 @@ class Search extends Component {
             type="text" 
             placeholder="What recall are you interested in?" 
             className="form-control"
+            value={this.props.term}
             onChange={event => this.onInputChange(event.target.value)} />
         </div>
       </div>

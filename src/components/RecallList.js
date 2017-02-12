@@ -1,19 +1,88 @@
 import React, { Component } from 'react';
 
-import Recall from "./Recall";
+import RecallListItem from "./RecallListItem";
+
+const debounce = (fn, delay = 500) => {
+  var timer = null;
+  return function () {
+    var context = this, args = arguments;
+    clearTimeout(timer);
+    timer = setTimeout(function () {
+      fn.apply(context, args);
+    }, delay);
+  };
+}
 
 class RecallList extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      recalls: [],
+      selectedRecall: null
+    };
+  }
+
+  refreshRecalls = debounce((escapedTerm) => {
+    //TODO: Allow changing to different filters, reason, company, product, etc
+    //TODO: Maybe do total count with graph, then individual listings?
+    //const FDA_URL = `https://api.fda.gov/food/enforcement.json?search=reason_for_recall:${escapedTerm}&count=report_date`;
+    const FDA_URL = `https://api.fda.gov/food/enforcement.json?search=product_description:${escapedTerm}&limit=10`;
+    
+    fetch(FDA_URL)
+      .then((response) => {
+        console.log("FDA", response);//, response.blob());
+        
+        if(response.ok) {
+          return response.json();
+        }
+
+        throw new Error('Network response was not ok.');
+      })
+      .then((recallData) => {
+        console.log("Recall Data", recallData);
+
+
+        this.setState({
+          recalls: recallData.results,
+          selectedRecall: recallData.results[0]
+        });
+        
+      }).catch(function(err) {
+        //TODO: Handle a 404 (no results)
+        console.log("Something went wrong", err);
+      });
+  }, 300)
+
+  componentDidMount() {
+    const escapedTerm = this.props.params.recallType;
+    
+    if (escapedTerm) {
+      this.refreshRecalls(escapedTerm);
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const escapedTerm = this.props.params.recallType;
+
+    if (prevProps.params.recallType === escapedTerm) {
+      return;
+    }
+
+    this.refreshRecalls(escapedTerm);
+  }
+
   renderRecall(recall) {
     return (
-      <Recall data={recall} />
+      <RecallListItem key={recall.recall_number} data={recall} />
     );
   }
 
   render() {
     return (
-      <div>
-        {this.state.recalls.map(renderRecall)}
-      </div>
+      <ul className="list-group">
+        {this.state.recalls.map(this.renderRecall)}
+      </ul>
     );
   }
 }
