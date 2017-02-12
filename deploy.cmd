@@ -115,8 +115,15 @@ IF EXIST "%DEPLOYMENT_TARGET%\package.json" (
 IF EXIST "%DEPLOYMENT_TARGET%\build" (
   pushd "%DEPLOYMENT_TARGET%\"
   echo "Putting build content in parent directory"
-  call :ExecuteCmd robocopy %DEPLOYMENT_TARGET%\build\ %DEPLOYMENT_TARGET%\ /MOVE /E
-  if !ERRORLEVEL! NEQ 0 goto error
+  call :ExecuteCmd robocopy %DEPLOYMENT_TARGET%\build\ %DEPLOYMENT_TARGET%\ /MOVE
+  if !ERRORLEVEL! GTR 7 goto error
+
+  IF NOT EXIST "%DEPLOYMENT_TARGET%\build" (
+    call :ExecuteCmd mkdir static
+  )
+
+  call :ExecuteCmd robocopy %DEPLOYMENT_TARGET%\build\static %DEPLOYMENT_TARGET%\static /MOVE /E /PURGE
+  if !ERRORLEVEL! GTR 7 goto error
   popd
 )
 
