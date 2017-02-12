@@ -111,22 +111,11 @@ IF EXIST "%DEPLOYMENT_TARGET%\package.json" (
   popd
 )
 
-:: 4. Remove existing static content
-IF EXIST "%DEPLOYMENT_TARGET%\static" (
-  pushd "%DEPLOYMENT_TARGET%\"
-  echo "Removing existing static content"
-  call :ExecuteCmd rmdir static /s
-
-  if !ERRORLEVEL! NEQ 0 goto error
-  popd
-)
-
-:: 5. Build the webclient
+:: 4.
 IF EXIST "%DEPLOYMENT_TARGET%\build" (
-  pushd "%DEPLOYMENT_TARGET%\build"
-  echo "Putting build content in parent direct"
-  call :ExecuteCmd move *.* ..
-  call :ExecuteCmd move static ..
+  pushd "%DEPLOYMENT_TARGET%\"
+  echo "Putting build content in parent directory"
+  call :ExecuteCmd robocopy %DEPLOYMENT_TARGET%\build\ %DEPLOYMENT_TARGET%\ /MOVE /E
   if !ERRORLEVEL! NEQ 0 goto error
   popd
 )
