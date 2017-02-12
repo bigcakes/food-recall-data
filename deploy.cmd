@@ -100,14 +100,13 @@ call :SelectNodeVersion
 :: 3. Install npm packages
 IF EXIST "%DEPLOYMENT_TARGET%\package.json" (
   pushd "%DEPLOYMENT_TARGET%"
-  call :ExecuteCmd !NPM_CMD! install ::--production
+  call :ExecuteCmd !NPM_CMD! install
   IF !ERRORLEVEL! NEQ 0 goto error
   popd
 
   pushd "%DEPLOYMENT_TARGET%"
   echo "Building web site using build script"
   call :ExecuteCmd !NPM_CMD! run build
- :: call :ExecuteCmd ".\node_modules\.bin\gulp.cmd"
   if !ERRORLEVEL! NEQ 0 goto error
   popd
 )
