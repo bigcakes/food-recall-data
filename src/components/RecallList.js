@@ -36,6 +36,8 @@ class RecallList extends Component {
 
 
         this.setState({
+          totalRecalls: recallData.meta.results.total,
+          currentRecalls: recallData.meta.results.limit,
           recalls: recallData.results,
           selectedRecall: recallData.results[0]
         });
@@ -76,6 +78,9 @@ class RecallList extends Component {
     return (
       <div className="row justify-content-center">
         <div className="col-lg-8">
+          <div className="text-center">
+            <span className="text-center">{ `${this.state.currentRecalls} of ${this.state.totalRecalls} recalls` }</span>
+          </div>
           <ul className="list-group recall-list">
             {this.state.recalls.map(this.renderRecall)}
           </ul>
