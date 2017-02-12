@@ -26,7 +26,7 @@ class RecallListItem extends Component {
           <h5><span className={`badge ${badgeClass}`}>{ recall.classification }</span></h5>
         </div>
 
-        <span>{ recall.product_description }</span>
+        <small>{ recall.product_description }</small>
       </Link>
     );
   }

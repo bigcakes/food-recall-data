@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import './Recall.css';
+
 class Recall extends Component {
   constructor(props) {
     super(props);
@@ -50,10 +52,21 @@ class Recall extends Component {
 
     return (
       <div className="row justify-content-center">
-        <div className="col-5">
-          I am a recall detail item { recall.recall_number }
-        </div>
-        <div className="col-5">
+        <div className="col-8">
+          <div className="card card-outline-info recall-card">
+            <div className="card-block">
+              <h4 className="card-title">{ recall.recalling_firm }</h4>
+              <div className="row">
+                <dt className="col-sm-3">Reason for Recall</dt>
+                <dd className="col-sm-9">{ recall.reason_for_recall }</dd>
+                <dt className="col-sm-3">Product Identification</dt>
+                <dd className="col-sm-9">{ recall.code_info }</dd>
+              </div>
+
+              <dt>Product Description</dt>
+              <dd><small>{ recall.product_description }</small></dd>
+            </div>
+          </div>
         </div>
       </div>
     );
