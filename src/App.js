@@ -25,7 +25,7 @@ class App extends Component {
       <div className="App">
         <div className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h2>Food Recall Data</h2>
+          <h2>Food Recalls</h2>
         </div>
         <Search onSearchTermChange={(term) => this.recallSearch(term)} term={this.props.params.recallType || ""} />
         {React.cloneElement(this.props.children, { ...this.props })}
