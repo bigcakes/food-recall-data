@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from "react-router";
 import logo from './logo.svg';
 import './App.css';
 
@@ -24,7 +25,10 @@ class App extends Component {
     return (
       <div className="App">
         <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
+          <Link 
+            to={{ pathname: `/` }} >
+            <img src={logo} className="App-logo" alt="logo" />
+          </Link>
           <h2>Food Recalls</h2>
         </div>
         <Search onSearchTermChange={(term) => this.recallSearch(term)} term={this.props.params.recallType || ""} />

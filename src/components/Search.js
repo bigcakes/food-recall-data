@@ -11,6 +11,8 @@ class Search extends Component {
 
   onInputChange(term) {
     //this.setState({term});
+    //TODO: Maybe change this to be debounced again and not directly tied to the 
+    //URL param being passed in, and instead just set the initial state in here based on the starting param?
     this.searchDebounce(term);
   }
 

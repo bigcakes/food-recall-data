@@ -1,13 +1,38 @@
 import React, { Component } from 'react';
+import { Link } from "react-router";
 
 class RecallListItem extends Component {
+  getBadgeClass(classification) {
+    switch(classification) {
+      case "Class III":
+        return "badge-danger";
+      case "Class II":
+        return "badge-warning";
+      default:
+        return "badge-info";
+    }
+  }
+
   render() {
+    const recall = this.props.data;
+    const badgeClass = this.getBadgeClass(recall.classification);
+
     return (
-      <li className="list-group-item">
-        {this.props.data.product_description}
-      </li>
+      <Link 
+        to={{ pathname: `/recall/${recall.recall_number}` }} 
+        className="list-group-item list-group-item-action">
+        <div className="justify-content-between w-100 d-flex">
+          <h3>{ recall.recalling_firm }</h3>
+          <h5><span className={`badge ${badgeClass}`}>{ recall.classification }</span></h5>
+        </div>
+
+        <p>{ recall.product_description }</p>
+      </Link>
     );
   }
+      /*<li className="list-group-item">
+        {this.props.data.product_description}
+      </li>*/
 }
 
 export default RecallListItem;

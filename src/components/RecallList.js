@@ -80,9 +80,13 @@ class RecallList extends Component {
 
   render() {
     return (
-      <ul className="list-group">
-        {this.state.recalls.map(this.renderRecall)}
-      </ul>
+      <div className="row justify-content-center">
+        <div className="col-md-8">
+          <ul className="list-group">
+            {this.state.recalls.map(this.renderRecall)}
+          </ul>
+        </div>
+      </div>
     );
   }
 }
