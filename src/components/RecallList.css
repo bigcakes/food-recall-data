@@ -1,0 +1,20 @@
+.recall-list .list-group-item {
+  background-color: transparent;
+  color: #fff;
+  border-color: #61e4f2;
+  border-right: none;
+  border-left: none;
+  border-radius: 0;
+  border: none;
+  margin-bottom: 1px;
+  box-shadow: 0px 24px 3px -24px #61e4f2;
+}
+
+.recall-list .list-group-item:last-child {
+  box-shadow: none;
+}
+
+.recall-list .list-group-item-action:focus, .recall-list .list-group-item-action:hover {
+  text-decoration: none;
+  background-color: #352762;
+}

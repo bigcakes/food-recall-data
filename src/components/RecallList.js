@@ -1,17 +1,9 @@
 import React, { Component } from 'react';
 
 import RecallListItem from "./RecallListItem";
+import { debounce } from "../utility";
 
-const debounce = (fn, delay = 500) => {
-  var timer = null;
-  return function () {
-    var context = this, args = arguments;
-    clearTimeout(timer);
-    timer = setTimeout(function () {
-      fn.apply(context, args);
-    }, delay);
-  };
-}
+import './RecallList.css';
 
 class RecallList extends Component {
   constructor(props) {
@@ -23,7 +15,7 @@ class RecallList extends Component {
     };
   }
 
-  refreshRecalls = debounce((escapedTerm) => {
+  refreshRecalls = (escapedTerm) => {
     //TODO: Allow changing to different filters, reason, company, product, etc
     //TODO: Maybe do total count with graph, then individual listings?
     //const FDA_URL = `https://api.fda.gov/food/enforcement.json?search=reason_for_recall:${escapedTerm}&count=report_date`;
@@ -44,6 +36,8 @@ class RecallList extends Component {
 
 
         this.setState({
+          totalRecalls: recallData.meta.results.total,
+          currentRecalls: recallData.meta.results.limit,
           recalls: recallData.results,
           selectedRecall: recallData.results[0]
         });
@@ -52,10 +46,12 @@ class RecallList extends Component {
         //TODO: Handle a 404 (no results)
         console.log("Something went wrong", err);
       });
-  }, 300)
+  }
+
+  refreshRecallsDebounced = debounce(this.refreshRecalls, 500)
 
   componentDidMount() {
-    const escapedTerm = this.props.params.recallType;
+    const escapedTerm = encodeURIComponent(this.props.params.recallType);
     
     if (escapedTerm) {
       this.refreshRecalls(escapedTerm);
@@ -69,7 +65,7 @@ class RecallList extends Component {
       return;
     }
 
-    this.refreshRecalls(escapedTerm);
+    this.refreshRecallsDebounced(escapedTerm);
   }
 
   renderRecall(recall) {
@@ -80,9 +76,16 @@ class RecallList extends Component {
 
   render() {
     return (
-      <ul className="list-group">
-        {this.state.recalls.map(this.renderRecall)}
-      </ul>
+      <div className="row justify-content-center">
+        <div className="col-lg-8">
+          <div className="text-center">
+            <span className="text-center">{ `${this.state.currentRecalls} of ${this.state.totalRecalls} recalls` }</span>
+          </div>
+          <ul className="list-group recall-list">
+            {this.state.recalls.map(this.renderRecall)}
+          </ul>
+        </div>
+      </div>
     );
   }
 }
