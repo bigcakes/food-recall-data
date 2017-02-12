@@ -52,7 +52,7 @@ class Recall extends Component {
 
     return (
       <div className="row justify-content-center">
-        <div className="col-8">
+        <div className="col-md-8">
           <div className="card card-outline-info recall-card">
             <div className="card-block">
               <h4 className="card-title">{ recall.recalling_firm }</h4>

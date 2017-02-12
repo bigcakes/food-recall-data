@@ -6,8 +6,6 @@ class Search extends Component {
   constructor(props) {
     super(props);
 
-    //this.state = { term: "" };
-
     this.searchDebounce = this.props.onSearchTermChange; //debounce(this.props.onSearchTermChange, 300);
   }
 
