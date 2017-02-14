@@ -7,7 +7,7 @@ class Recall extends Component {
     super(props);
 
     this.state = {
-      selectedRecall: {}
+      selectedRecall: null
     };
   }
   
@@ -49,6 +49,15 @@ class Recall extends Component {
 
   render() {
     const recall = this.state.selectedRecall;
+    if (!recall) {
+      return (
+        <div className="text-center">Loading...</div>
+      )
+    }
+
+    const initiationDate = recall.recall_initiation_date.replace(
+        /(\d\d\d\d)(\d\d)(\d\d)/, '$2/$3/$1'
+    );
 
     return (
       <div className="row justify-content-center">
@@ -57,6 +66,8 @@ class Recall extends Component {
             <div className="card-block">
               <h4 className="card-title">{ recall.recalling_firm }</h4>
               <div className="row">
+                <dt className="col-sm-3">Recall Initiation Date</dt>
+                <dd className="col-sm-9">{ initiationDate }</dd>
                 <dt className="col-sm-3">Reason for Recall</dt>
                 <dd className="col-sm-9">{ recall.reason_for_recall }</dd>
                 <dt className="col-sm-3">Product Identification</dt>
