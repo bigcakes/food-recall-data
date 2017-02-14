@@ -12,6 +12,7 @@ Check it out live [FoodRecalls.info](https://foodrecalls.info)
 - Hosted on Azure
 - Secured with Cloudflare
 - ES6 and Babel
+- Using data from [openFDA](https://open.fda.gov)
 
 ## TODO
 - Add pagination of results
@@ -19,6 +20,7 @@ Check it out live [FoodRecalls.info](https://foodrecalls.info)
 - Get html5 history working on Azure
 - Add more details to list and detail records
 - Add filters for other fields (dates, classifications, etc)
+- Fancy D3 charts
 
 ## Miscellaneous
 
